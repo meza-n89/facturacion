@@ -8,7 +8,12 @@
 	<link href="<?php echo base_url();?>css/font-awesome.min.css" rel="stylesheet">
 	<link href="<?php echo base_url();?>css/datepicker3.css" rel="stylesheet">
 	<link href="<?php echo base_url();?>css/styles.css" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+	 <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css" rel="stylesheet">
+
+
 	
 	<!--Custom Font-->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -72,7 +77,52 @@
 			
 		</ul>
 	</div><!--/.sidebar-->
-		
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="post" id="from-clientes">
+        	<input type="hidden" name="id_clientes" value="">
+	<div class="form-group">
+    <label for="exampleInputEmail1">Email </label>
+    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email" placeholder="Email">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputEmail1">Nombre</label>
+    <input type="text" class="form-control"  required="" name="nombre" id="nombre" placeholder="Nombre">
+  </div>
+    <div class="form-group">
+    <label for="exampleInputEmail1">Apellidos</label>
+    <input type="text" class="form-control"  required="" name="apellidos" id="apellidos" placeholder="Apellidos">
+  </div>
+   <div class="form-group">
+    <label for="exampleInputEmail1">Direccion</label>
+    <input type="text" class="form-control"  required="" name="direccion" id="direccion" placeholder="Direccion">
+  </div>
+     <div class="form-group">
+    <label for="exampleInputEmail1">Fecha de nacimiento</label>
+    <input type="date" class="form-control"  required="" name="fecha_nacimiento" id="fecha_nacimiento" >
+  </div>
+    <div class="form-group">
+    <label for="exampleInputEmail1">Telefono</label>
+    <input type="text" class="form-control" required="" id="phone" name="telefono"  >
+  </div>
+  <button type="submit" class="btn btn-primary" onclick="insert_clientes()" >Submit</button>
+</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 		<div class="row">
 			<ol class="breadcrumb">
@@ -89,27 +139,30 @@
 			</div>
 		</div><!--/.row-->
 				
-		
+	
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="panel panel-default">
 					<div class="panel-heading">Clientes</div>
 					<div class="panel-body">
 						<div class="col-md-12">
-							<table class="table">
+							<table class="table" id="example">
   <thead class="thead-dark">
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Apellidos</th>
+      <th scope="col">Direccion</th>
+      <th scope="col">fecha de nacimiento</th>
+      <th scope="col">telefono</th>
+      <th scope="col">email</th>
+      <th scope="col">opciones</th>
     </tr>
   </thead>
  </table>
 						</div>
 					</div>
 				</div><!-- /.panel-->
-				
+
 				
 				<!-- /.panel-->
 			</div><!-- /.col-->
@@ -129,6 +182,14 @@
 	<script src="<?php echo base_url();?>js/custom.js"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+
 	
 </body>
 </html>
@@ -136,29 +197,58 @@
 	  $(document).ready(function() {
     $('#example').DataTable( {
         "ajax": {
-            "url": "<?php echo site_url();?>/Producto/llenar_tabla",
+            "url": "<?php echo site_url();?>/Clientes/show_clientes",
             "dataSrc": ""
         },
         "columns": [
-            { "data": "nombre_producto" },
-            { "data": "nombre_tipo" },
-            { "data": "descripcion_producto" },
-            { "data": "nombre_proveedor" },
-            { "data": "estado_producto" },
-            { "data": "existencias_producto" },
-            { "data": "stock_minimo_producto" },
-            { "data": "fecha_caducidad_producto" }
+            { "data": "nombre" },
+            { "data": "apellido" },
+            { "data": "direccion" },
+            { "data": "fecha_nacimiento" },
+            { "data": "telefono" },
+            { "data": "email" },
+            {"data" : "opciones"}
         ],
         dom: 'Bfrtip',
         buttons: [
-              'copy', 'excel', 'pdf'
+              'copy', 'excel', 'pdf',
               {
                 extend: 'pdfHtml5',
                   download: 'open',
               }
               
-          ]
+          ],
 
     } );
-} );
+
+} 
+);
+	  function llenar_formulario(id)
+	{
+		$.ajax({
+		dataType:"JSON",
+		url:"<?php echo site_url();?>/Clientes/show_user",
+		data:"id="+ id,
+		type:"get",
+		success: function(data)
+		{
+			$('#id').val(data[0]['id_cliente']);
+			$('#nombre').val(data[0]['nombre']);
+			$('#email').val(data[0]['email']);
+			$('#apellidos').val(data[0]['apellido']);
+			$('#direccion').val(data[0]['direccion']);
+			$('#fecha_nacimiento').val(data[0]['fecha_nacimiento']);
+			$('#phone').val(data[0]['telefono']);
+		}
+
+
+
+		});
+	}
+		function update_user(id)
+		{
+			$.ajax({
+				url:"<?php echo site_url();?>/Clientes/update_cliente"
+			});
+		}
 </script>

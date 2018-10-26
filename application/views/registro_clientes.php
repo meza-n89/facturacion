@@ -102,7 +102,7 @@
 							<form method="post" id="from-clientes">
 	<div class="form-group">
     <label for="exampleInputEmail1">Email </label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email" placeholder="Email">
+    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email" placeholder="Email">
   </div>
   <div class="form-group">
     <label for="exampleInputEmail1">Nombre</label>
@@ -158,7 +158,10 @@ $(document).ready(function(){
 
 });
 function insert_clientes()
-{
+{ 
+	if($('#nombre').val()==''||$('#email').val()==''||$('#apellidos').val()==''||$('#direccion').val()==''||$('#fecha_nacimiento').val()==''||$('#phone').val()==''){
+		alert('Debe llenar todos los datos')
+	}else{
 	 
 	var url = "<?php echo site_url();?>/Registroclientes/registro_clientes";
 	$.ajax({
@@ -173,6 +176,7 @@ function insert_clientes()
 			}
 		}
 	});
+}
 }
 	</script>
 
