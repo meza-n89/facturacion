@@ -178,6 +178,7 @@ function insert_clientes()
 	});
 }
 }
+
 	</script>
 
 </body>

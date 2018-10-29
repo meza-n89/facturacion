@@ -77,7 +77,7 @@
 			
 		</ul>
 	</div><!--/.sidebar-->
-	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -87,33 +87,20 @@
         </button>
       </div>
       <div class="modal-body">
-        <form method="post" id="update-cliente">
-        	<input type="hidden" name="id_cliente" id="id_cliente" value="">
-	<div class="form-group">
-    <label for="exampleInputEmail1">Email </label>
-    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email" placeholder="Email">
+        <form method="post" id="form-producto">
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputEmail4">Nombre</label>
+      <input type="text" class="form-control" id="nombre" placeholder="Nombre" name="nombre">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputPassword4">Descripcion</label>
+      <input type="text" class="form-control" id="precio" placeholder="Precio" name="precio">
+    </div>
   </div>
-  <div class="form-group">
-    <label for="exampleInputEmail1">Nombre</label>
-    <input type="text" class="form-control"  required="" name="nombre" id="nombre" placeholder="Nombre">
-  </div>
-    <div class="form-group">
-    <label for="exampleInputEmail1">Apellidos</label>
-    <input type="text" class="form-control"  required="" name="apellidos" id="apellidos" placeholder="Apellidos">
-  </div>
-   <div class="form-group">
-    <label for="exampleInputEmail1">Direccion</label>
-    <input type="text" class="form-control"  required="" name="direccion" id="direccion" placeholder="Direccion">
-  </div>
-     <div class="form-group">
-    <label for="exampleInputEmail1">Fecha de nacimiento</label>
-    <input type="date" class="form-control"  required="" name="fecha_nacimiento" id="fecha_nacimiento" >
-  </div>
-    <div class="form-group">
-    <label for="exampleInputEmail1">Telefono</label>
-    <input type="text" class="form-control" required="" id="phone" name="telefono"  >
-  </div>
-  <button type="submit" class="btn btn-primary" onclick="update_user()" >Submit</button>
+  <div class="form-group col-md-4">
+  <button type="submit" class="btn btn-primary" onclick="insert_producto()">Registrar</button>
+ </div>
 </form>
       </div>
       <div class="modal-footer">
@@ -123,19 +110,21 @@
     </div>
   </div>
 </div>
+
+
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 		<div class="row">
 			<ol class="breadcrumb">
 				<li><a href="#">
 					<em class="fa fa-home"></em>
 				</a></li>
-				<li class="active">Forms</li>
+				<li class="active">Categoria</li>
 			</ol>
 		</div><!--/.row-->
 		
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 class="page-header">Catalogo de clientes</h1>
+				<h1 class="page-header">Categorias de productos</h1>
 			</div>
 		</div><!--/.row-->
 				
@@ -143,20 +132,15 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="panel panel-default">
-					<div class="panel-heading">Clientes</div>
+					<div class="panel-heading">Categorias</div>
 					<div class="panel-body">
 						<div class="col-md-12">
 							<table class="table" id="example">
   <thead class="thead-dark">
     <tr>
       <th scope="col">Nombre</th>
-      <th scope="col">Apellidos</th>
-      <th scope="col">Direccion</th>
-      <th scope="col">fecha de nacimiento</th>
-      <th scope="col">telefono</th>
-      <th scope="col">email</th>
-      <th scope="col">opciones</th>
-    </tr>
+      <th scope="col">Descripcion</th>
+     </tr>
   </thead>
  </table>
 						</div>
@@ -202,12 +186,8 @@
         },
         "columns": [
             { "data": "nombre" },
-            { "data": "apellido" },
-            { "data": "direccion" },
-            { "data": "fecha_nacimiento" },
-            { "data": "telefono" },
-            { "data": "email" },
-            {"data" : "opciones"}
+            { "data": "descripcion" }
+          
         ],
         dom: 'Bfrtip',
         buttons: [
@@ -232,36 +212,20 @@
 		type:"get",
 		success: function(data)
 		{
-			$('#id_cliente').val(data[0]['id_cliente']);
+			$('#id').val(data[0]['id_cliente']);
 			$('#nombre').val(data[0]['nombre']);
-			$('#email').val(data[0]['email']);
-			$('#apellidos').val(data[0]['apellido']);
-			$('#direccion').val(data[0]['direccion']);
-			$('#fecha_nacimiento').val(data[0]['fecha_nacimiento']);
-			$('#phone').val(data[0]['telefono']);
+			$('#descripcion').val(data[0]['descripcion']);
+			
 		}
 
 
 
 		});
 	}
-		function update_user()
+		function update_user(id)
 		{
 			$.ajax({
-				url:"<?php echo site_url();?>/Clientes/update_cliente",
-				type:"POST",
-				data: $('#update-cliente').serialize(),
-				success: function(data)
-				{
-					if(data!=0)
-					{
-						alert('datos ingresados correctament');
-
-					}
-					else{
-						alert('los datos no fueron guardados');
-					}
-				}
+				url:"<?php echo site_url();?>/Clientes/update_cliente"
 			});
 		}
 </script>

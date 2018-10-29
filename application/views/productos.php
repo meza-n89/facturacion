@@ -85,7 +85,8 @@
         </button>
       </div>
       <div class="modal-body">
-        <form method="post" id="form-producto">
+        <form method="post" id="update_producto">
+        	<input type="hidden" name="id_producto" id="id_producto">
   <div class="form-row">
     <div class="form-group col-md-6">
       <label for="inputEmail4">Nombre</label>
@@ -107,13 +108,13 @@
       </select>
     </div>
     <div class="form-group col-md-4">
-  <button type="submit" class="btn btn-primary" onclick="insert_producto()">Registrar</button>
+  <button type="submit" class="btn btn-primary" onclick="update_prod()">Registrar</button>
  </div>
 </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        
       </div>
     </div>
   </div>
@@ -188,6 +189,8 @@
 </html>
 <script type="text/javascript">
 	  $(document).ready(function() {
+	  llenar_categoria();
+
     $('#protable').DataTable( {
         "ajax": {
             "url": "<?php echo site_url();?>/Productos/show_producto",
@@ -223,7 +226,7 @@
 		type:"get",
 		success: function(data)
 		{
-			$('#id').val(data[0]['id_producto']);
+			$('#id_producto').val(data[0]['id_producto']);
 			$('#nombre').val(data[0]['nombre']);
 			$('#precio').val(data[0]['precio']);
 			$('#stock').val(data[0]['stock']);
@@ -235,10 +238,33 @@
 
 		});
 	}
-		function update_prod(id)
+		function update_prod()
 		{
 			$.ajax({
-				url:"<?php echo site_url();?>/Productos/update_producto"
+				url:"<?php echo site_url();?>/Productos/update_producto",
+				type:"POST",
+				data: $("#update_producto").serialize(),
+				success: function(data)
+				{
+					if(data!=0)
+					{
+						alert('datos ingresados correctament');
+
+					}
+					else{
+						alert('los datos no fueron guardados');
+					}
+				}
+			});
+		}
+		function llenar_categoria(){
+			$.ajax({
+				type:"POST",
+				url:"<?php echo site_url();?>/Productos/select_categoria",
+				success: function(data){
+					$('#categoria').html('');
+					$('#categoria').html(data);
+				}
 			});
 		}
 </script>

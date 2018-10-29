@@ -29,6 +29,7 @@ public function delete_cliente()
 	$id_cliente=$this->input->get('id_cliente');
 	$this->load->model('Model_clientes','MC',true);
 	$this->MC->delete_clientes($id_cliente);
+	redirect('/Clientes/clientes_view');
 }
 public function show_user()
 {
@@ -40,7 +41,7 @@ public function update_cliente()
 {
 	$this->load->model('Model_clientes','MC',true);
 	$this->MC->update_cliente(
-		$this->input->get('id_cliente'),
+		$this->input->post('id_cliente'),
 		$this->input->post('nombre'),
 		$this->input->post('apellidos'),
 		$this->input->post('direccion'),

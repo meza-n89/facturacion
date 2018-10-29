@@ -57,13 +57,13 @@ public function delete_producto()
 {
 	$id_productos=$this->input->get('id_producto');
 	$this->load->model('Model_productos','MP',true);
-	$this->MC->delete_productos($id_productos);
+	$this->MP->delete_productos($id_productos);
 }
 public function update_producto()
 {
 	$this->load->model('Model_productos','MP',true);
-	$this->MC->update_producto(
-			$this->input->get('id_producto'),
+	$this->MP->update_producto(
+			$this->input->post('id_producto'),
 			$this->input->post('nombre'),
 			$this->input->post('precio'),
 			$this->input->post('stock'),

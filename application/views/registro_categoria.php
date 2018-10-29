@@ -9,8 +9,7 @@
 	<link href="<?php echo base_url();?>css/font-awesome.min.css" rel="stylesheet">
 	<link href="<?php echo base_url();?>css/datepicker3.css" rel="stylesheet">
 	<link href="<?php echo base_url();?>css/styles.css" rel="stylesheet">
-	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-	  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	
 	<!--Custom Font-->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 	<!--[if lt IE 9]>
@@ -89,7 +88,7 @@
 		
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 class="page-header">Creacion de facturas</h1>
+				<h1 class="page-header">Registro de productos</h1>
 			</div>
 		</div><!--/.row-->
 				
@@ -97,69 +96,31 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="panel panel-default">
-					<div class="panel-heading">Facturacion</div>
+					<div class="panel-heading">Registro</div>
+					<div class="panel-body">
+						
+      <form method="post" id="category">
+  <div class="form-group row">
+    <label for="staticEmail" class="col-sm-2 col-form-label">Nombre</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control-plaintext" name="nombre" id="nombre" >
+    </div>
+  </div>
+    <div class="form-group row">
+    <label for="staticEmail" class="col-sm-2 col-form-label">Descripcion</label>
+    <div class="col-sm-10">
+      <textarea type="text" class="form-control-plaintext" name="descripcion" id="descripcion" ></textarea> 
+    </div>
+  </div>
+ 
 
+      <div class="modal-footer">
+       <button type="submit" class="btn btn-primary" onclick="nueva_categoria()" >Guardar</button>
+      </div>
+      </form>
 
-
-
-
-					
-				<form class="form-horizontal" role="form" id="datos_factura">
-				<div class="form-group row">
-				  <label for="nombre_cliente" class="col-md-1 control-label">Cliente</label>
-				  <div class="col-md-3">
-					  <input type="text" class="form-control input-sm" id="nombre_cliente" placeholder="Selecciona un cliente" required>
-					  <input id="id_cliente" type='hidden'>	
-				  </div>
-				  <label for="tel1" class="col-md-1 control-label">Teléfono</label>
-							<div class="col-md-2">
-								<input type="text" class="form-control input-sm" id="telefono" placeholder="Teléfono" >
-							</div>
-					<label for="mail" class="col-md-1 control-label">Email</label>
-							<div class="col-md-3">
-								<input type="text" class="form-control input-sm" id="mail" placeholder="Email" readonly>
-							</div>
-				 </div>
-						<div class="form-group row">
-							<label for="empresa" class="col-md-1 control-label">Vendedor</label>
-							<div class="col-md-3">
-								<select class="form-control input-sm" id="id_vendedor">
-									
-								</select>
-							</div>
-							<label for="tel2" class="col-md-1 control-label">Fecha</label>
-							<div class="col-md-2">
-								<input type="text" class="form-control input-sm" id="fecha" value="<?php echo date("d/m/Y");?>" readonly>
-							</div>
-							<label for="email" class="col-md-1 control-label">Pago</label>
-							<div class="col-md-3">
-								<select class='form-control input-sm' id="condiciones">
-									<option value="1">Efectivo</option>
-									<option value="2">Cheque</option>
-									<option value="3">Transferencia bancaria</option>
-									<option value="4">Crédito</option>
-								</select>
-							</div>
-						</div>
-				
-				
-				<div class="col-md-12">
-					<div class="pull-right">
-						<button type="button" class="btn btn-default" data-toggle="modal" data-target="#nuevoProducto">
-						 <span class="glyphicon glyphicon-plus"></span> Nuevo producto
-						</button>
-						<button type="button" class="btn btn-default" data-toggle="modal" data-target="#nuevoCliente">
-						 <span class="glyphicon glyphicon-user"></span> Nuevo cliente
-						</button>
-						<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">
-						 <span class="glyphicon glyphicon-search"></span> Agregar productos
-						</button>
-						<button type="submit" class="btn btn-default">
-						  <span class="glyphicon glyphicon-print"></span> Imprimir
-						</button>
-					</div>	
-				</div>
-			</form>
+						
+					</div>
 				</div><!-- /.panel-->
 				
 				
@@ -172,7 +133,9 @@
 			</div>
 		</div><!-- /.row -->
 	</div><!--/.main-->
-	<h1>hola</h1>
+	<!-- Modal -->
+
+<!--modal-->
 <script src="<?php echo base_url();?>js/bootstrap.min.js"></script>
 	<script src="<?php echo base_url();?>js/chart.min.js"></script>
 	<script src="<?php echo base_url();?>js/chart-data.js"></script>
@@ -180,23 +143,34 @@
 	<script src="<?php echo base_url();?>js/easypiechart-data.js"></script>
 	<script src="<?php echo base_url();?>js/bootstrap-datepicker.js"></script>
 	<script src="<?php echo base_url();?>js/custom.js"></script>
-
 	<script type="text/javascript">
-		$(document).ready(function(){
-//var dato = $("#nombre_cliente").val();
-		$("#nombre_cliente").autocomplete({
-		source:"<?php echo site_url();?>/Facturacion/autocomplete_cliente",
-		minLenght: 2,
-		data:{nombre: $("#nombre_cliente").val()},
-		select: function(data,event,ui){
-			event.preventDefault();
-			$("#telefono").val(ui.item.telefono);
-			$('#nombre_cliente').val(ui.item.nombre);
-		}
-			});
-		});
-		
-	</script>
+function nueva_categoria(){
+			if($('#nombre').val()==''||$('#descripcion').val()==''){
+				alert('debe ingresar todos los datos');
+			}else{
+				var url ="<?php echo site_url();?>/Productos/nueva_categoria";
+				$.ajax({
+					type:"POST",
+					url:url,
+					data: $('#category').serialize(),
+					success: function(data)
+					{
+					if(data!=0)
+					{
+						alert('datos ingresados correctament');
 
+					}
+					else{
+						alert('los datos no fueron guardados');
+					}
+				}
+
+
+				});
+		}
+	}
+
+
+	</script>
 </body>
 </html>

@@ -39,18 +39,19 @@ class Model_productos extends CI_model
 		$this->db->where('id_producto',$id_productos);
 		$this->db->delete('producto');
 	}
-		public function update_producto($nombre,$precio,$stock,$id_categoria)
+		public function update_producto($nombre,$precio,$stock,$id_categoria,$id_producto)
 	{
 		
 		$data= array(
+			'id_producto'=>$id_producto,
 			'nombre'=>$nombre,
-			'apellido'=>$precio,
-			'direccion'=>$stock,
-			'fecha_nacimiento'=>$id_categoria
+			'precio'=>$precio,
+			'stock'=>$stock,
+			'id_categoria'=>$id_categoria
 			
 		);
 		$this->db->where('id_producto',$id_producto);
-		$this->db->replace('producto',$data);
+		$this->db->update('producto',$data);
 
 	}
 

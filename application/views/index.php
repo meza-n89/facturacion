@@ -60,7 +60,7 @@
 					<li><a class="" href="<?php echo site_url();?>/Productos/registroprod_view">
 						<span class="fa fa-arrow-right">&nbsp;</span> Registro de productos
 					</a></li>
-					<li><a class="" href="#">
+					<li><a class="" href="<?php echo site_url();?>/Categoria/categoria_view">
 						<span class="fa fa-arrow-right">&nbsp;</span> Registro de categoria
 					</a></li>
 					<li><a class="" href="#">

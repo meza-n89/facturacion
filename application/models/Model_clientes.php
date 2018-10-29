@@ -38,6 +38,7 @@ $this->db->insert('cliente',$data);
 	{
 		
 		$data= array(
+			'id_cliente'=>$id_cliente,
 			'nombre'=>$nombre,
 			'apellido'=>$apellido,
 			'direccion'=>$direccion,
@@ -46,7 +47,7 @@ $this->db->insert('cliente',$data);
 			'email'=>$email
 		);
 		$this->db->where('id_cliente',$id_cliente);
-		$this->db->replace('cliente',$data);
+		$this->db->update('cliente',$data);
 
 	}
 }
