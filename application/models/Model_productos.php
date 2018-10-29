@@ -29,6 +29,38 @@ class Model_productos extends CI_model
 		);
 		$this->db->insert('categoria',$data);
 	}
+	public function show_productos()
+	{
+		$query=$this->db->get('producto');
+		return $query->result_array();
+	}
+	public function delete_productos($id_productos)
+	{
+		$this->db->where('id_producto',$id_productos);
+		$this->db->delete('producto');
+	}
+		public function update_producto($nombre,$precio,$stock,$id_categoria)
+	{
+		
+		$data= array(
+			'nombre'=>$nombre,
+			'apellido'=>$precio,
+			'direccion'=>$stock,
+			'fecha_nacimiento'=>$id_categoria
+			
+		);
+		$this->db->where('id_producto',$id_producto);
+		$this->db->replace('producto',$data);
+
+	}
+
+public function show_prod($id)
+	{
+		$this->db->where('id_producto',$id);
+		$query=$this->db->get('producto');
+		return $query->result_array();
+	}
+
 }
 
 

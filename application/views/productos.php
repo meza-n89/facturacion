@@ -8,6 +8,10 @@
 	<link href="<?php echo base_url();?>css/font-awesome.min.css" rel="stylesheet">
 	<link href="<?php echo base_url();?>css/datepicker3.css" rel="stylesheet">
 	<link href="<?php echo base_url();?>css/styles.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+	 <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css" rel="stylesheet">
 	
 	<!--Custom Font-->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -71,6 +75,49 @@
 			
 		</ul>
 	</div><!--/.sidebar-->
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="post" id="form-producto">
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputEmail4">Nombre</label>
+      <input type="text" class="form-control" id="nombre" placeholder="Nombre" name="nombre">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputPassword4">Precio</label>
+      <input type="text" class="form-control" id="precio" placeholder="Precio" name="precio">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputAddress">stock</label>
+    <input type="text" class="form-control" id="stock" name="stock" placeholder="stock">
+  </div>
+  <div class="form-group col-md-4">
+      <label for="inputState">Categoria</label>
+      <select id="categoria" name="id_categoria" class="form-control">
+      	<!--CATEGORIA-->
+      </select>
+    </div>
+    <div class="form-group col-md-4">
+  <button type="submit" class="btn btn-primary" onclick="insert_producto()">Registrar</button>
+ </div>
+</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 		
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 		<div class="row">
@@ -95,35 +142,16 @@
 					<div class="panel-heading">Productos</div>
 					<div class="panel-body">
 						<div class="col-md-12">
-							<table class="table">
+							<table class="table" id="protable">
   <thead class="thead-dark">
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
+      <th scope="col">nombre</th>
+      <th scope="col">precio</th>
+      <th scope="col">stock</th>
+      <th scope="col">categoria</th>
+      <th scope="col">Opciones</th>
     </tr>
   </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-    </tr>
-  </tbody>
 </table>
 						</div>
 					</div>
@@ -146,6 +174,71 @@
 	<script src="<?php echo base_url();?>js/easypiechart-data.js"></script>
 	<script src="<?php echo base_url();?>js/bootstrap-datepicker.js"></script>
 	<script src="<?php echo base_url();?>js/custom.js"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
 	
 </body>
 </html>
+<script type="text/javascript">
+	  $(document).ready(function() {
+    $('#protable').DataTable( {
+        "ajax": {
+            "url": "<?php echo site_url();?>/Productos/show_producto",
+            "dataSrc": ""
+        },
+        "columns": [
+            { "data": "nombre" },
+            { "data": "precio" },
+            { "data": "stock" },
+            { "data": "id_categoria" },
+            { "data": "opciones" }
+        ],
+        dom: 'Bfrtip',
+        buttons: [
+              'copy', 'excel', 'pdf',
+              {
+                extend: 'pdfHtml5',
+                  download: 'open',
+              }
+              
+          ],
+
+    } );
+
+} 
+);
+	  function llenar_formulario(id)
+	{
+		$.ajax({
+		dataType:"JSON",
+		url:"<?php echo site_url();?>/Productos/show_prod",
+		data:"id="+ id,
+		type:"get",
+		success: function(data)
+		{
+			$('#id').val(data[0]['id_producto']);
+			$('#nombre').val(data[0]['nombre']);
+			$('#precio').val(data[0]['precio']);
+			$('#stock').val(data[0]['stock']);
+			$('#id_categoria').val(data[0]['id_categoria']);
+			
+		}
+
+
+
+		});
+	}
+		function update_prod(id)
+		{
+			$.ajax({
+				url:"<?php echo site_url();?>/Productos/update_producto"
+			});
+		}
+</script>

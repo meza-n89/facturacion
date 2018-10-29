@@ -17,7 +17,7 @@ public function show_clientes()
 		$eshta[$x]['fecha_nacimiento']=$value['fecha_nacimiento'];
 		$eshta[$x]['telefono']=$value['telefono'];
 		$eshta[$x]['email']=$value['email'];
-		$eshta[$x]['opciones']='<a class="btn btn-danger" type="button" href="'.site_url().'/Clientes/delete_cliente?id_cliente='.$value["id_cliente"].'"><i class="fas fa-trash-alt"></a>
+		$eshta[$x]['opciones']='<a class="btn btn-danger" type="button" href="'.site_url().'/Clientes/delete_cliente?id_cliente='.$value["id_cliente"].'"><i class="fas fa-trash-alt"></i></a>
 		<a class="btn btn-success" data-toggle="modal" data-target="#exampleModal" onclick="llenar_formulario('.$value['id_cliente'].')"><i class="fas fa-edit"></a>';
 		$x++;
 
